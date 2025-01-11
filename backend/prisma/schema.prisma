@@ -12,3 +12,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// criar uma migration: yarn prisma migrate dev
+model User {
+  id String @id @default(uuid())
+  nome String
+  email String
+  senha String
+  data_Criacao DateTime? @default(now())
+  data_Atualizacao DateTime? @default(now())
+
+  @@map("Usuario")
+}
+
+model Categoria {
+  id String @id @default(uuid())
+  nome String
+  data_Criacao DateTime? @default(now())
+  data_Atualizacao DateTime? @default(now())
+
+  @@map("Categoria")
+  produto Produto[]
+}
+
+model Produto {
+  id String @id @default(uuid())
+  nome String
+  preco String
+  descricao String
+  banner String
+  data_Criacao DateTime? @default(now())
+  data_Atualizacao DateTime? @default(now())
+
+  categoria Categoria @relation(fields: [fk_Id_Categoria], references: [id])
+
+  @@map("Produto")
+  fk_Id_Categoria String
+}
+
+model Pedido {
+  id String @id @default(uuid())
+  mesa Int
+  status Boolean @default(false)
+  rascunho Boolean @default(true)
+  nome String?
+  data_Criacao DateTime? @default(now())
+  data_Atualizacao DateTime? @default(now())
+
+  @@map("Pedido")
+  item Item[]
+}
+
+model Item {
+  id String @id @default(uuid())
+  quantidade Int
+  data_Criacao DateTime? @default(now())
+  data_Atualizacao DateTime? @default(now())
+
+  pedido Pedido @relation(fields: [fk_Id_Pedido], references: [id])
+
+  @@map("Item")
+  fk_Id_Pedido String
+}

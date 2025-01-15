@@ -1,11 +1,8 @@
-import { Router, Request, Response, response } from "express";
+import { Router } from "express";
+import { CadastrarUsuarioController } from "./controllers/Usuario/CadastrarUsuarioController";
 
 const router = Router();
 
-router.get('/teste', (req: Request, res: Response) => {
-    return res.json({
-        teste: 'OK'
-    })
-});
+router.post('/cadastro', new CadastrarUsuarioController().handle)
 
 export { router };

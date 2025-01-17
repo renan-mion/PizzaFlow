@@ -5,11 +5,9 @@ class PerfilUsuarioController {
     async handle(req: Request, res: Response) {
         const user_id = req.user_id;
 
-        console.log("Id do usuário: ", user_id);
-
         const perfilUsuarioService = new PerfilUsuarioService();
 
-        const usuario = await perfilUsuarioService.execute();
+        const usuario = await perfilUsuarioService.execute(user_id);
 
         return res.json(usuario);
     }

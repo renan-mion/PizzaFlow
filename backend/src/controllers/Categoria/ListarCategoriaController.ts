@@ -7,8 +7,6 @@ class ListarCategoriaController {
 
         const categorias = await listarCategoriaService.execute();
 
-        console.log("erro");
-
         return res.json(categorias);
     }
 }

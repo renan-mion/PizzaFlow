@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { CadastrarCategoriaService } from "../../services/Categoria/CadastrarCategoriaService";
-import { CadastrarProdutoService } from "../../services/Produto/CadastraProdutoService";
+import { CadastrarProdutoService } from "../../services/Produto/CadastrarProdutoService";
 
 class CadastrarProdutoController {
     async handle(req: Request, res: Response) {

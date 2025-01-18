@@ -5,6 +5,7 @@ import { PerfilUsuarioController } from "./controllers/Usuario/PerfilUsuarioCont
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { CadastrarCategoriaController } from "./controllers/Categoria/CadastrarCategoriaController";
 import { ListarCategoriaController } from "./controllers/Categoria/ListarCategoriaController";
+import { CadastrarProdutoController } from "./controllers/Produto/CadastrarProdutoController";
 
 const router = Router();
 
@@ -16,5 +17,8 @@ router.get('/perfil', isAuthenticated, new PerfilUsuarioController().handle);
 // Rotas de Categoria
 router.post('/cadastro-categoria', isAuthenticated, new CadastrarCategoriaController().handle)
 router.get('/listar-categorias', isAuthenticated, new ListarCategoriaController().handle);
+
+// Rotas de Produto
+router.post('/cadastro-produto', isAuthenticated, new CadastrarProdutoController().handle);
 
 export { router };

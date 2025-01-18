@@ -3,13 +3,19 @@ import { CadastrarProdutoService } from "../../services/Produto/CadastrarProduto
 
 class CadastrarProdutoController {
     async handle(req: Request, res: Response) {
-        const { nome, preco, descricao, banner, id_categoria } = req.body;
+        const { nome, preco, descricao, id_categoria } = req.body;
 
         const cadastrarProdutoService = new CadastrarProdutoService();
 
-        const produto = await cadastrarProdutoService.execute({ nome, preco, descricao, banner, id_categoria });
+        if (!req.file) {
+            throw new Error("Erro ao fazer upload de arquivo");
+        } else {
+            const { originalname, filename: banner } = req.file;
 
-        return res.json(produto);
+            const produto = await cadastrarProdutoService.execute({ nome, preco, descricao, banner, id_categoria });
+
+            return res.json(produto);
+        }
     }
 }
 

@@ -1,5 +1,9 @@
 import { Router } from "express";
 import multer from "multer";
+
+import { isAuthenticated } from "./middlewares/isAuthenticated";
+import uploadConfig from "./config/multer";
+
 import { CadastrarUsuarioController } from "./controllers/Usuario/CadastrarUsuarioController";
 import { AuthUsuarioController } from "./controllers/Usuario/AuthUsuarioController";
 import { PerfilUsuarioController } from "./controllers/Usuario/PerfilUsuarioController";
@@ -7,9 +11,7 @@ import { PerfilUsuarioController } from "./controllers/Usuario/PerfilUsuarioCont
 import { CadastrarCategoriaController } from "./controllers/Categoria/CadastrarCategoriaController";
 import { ListarCategoriaController } from "./controllers/Categoria/ListarCategoriaController";
 import { CadastrarProdutoController } from "./controllers/Produto/CadastrarProdutoController";
-
-import { isAuthenticated } from "./middlewares/isAuthenticated";
-import uploadConfig from "./config/multer";
+import { FiltrarProdutosController } from "./controllers/Produto/FiltrarProdutosController";
 
 const router = Router();
 
@@ -26,5 +28,6 @@ router.get('/listar-categorias', isAuthenticated, new ListarCategoriaController(
 
 // Rotas de Produto
 router.post('/cadastro-produto', isAuthenticated, upload.single('file'), new CadastrarProdutoController().handle);
+router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController().handle)
 
 export { router };

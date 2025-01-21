@@ -10,10 +10,14 @@ import { PerfilUsuarioController } from "./controllers/Usuario/PerfilUsuarioCont
 
 import { CadastrarCategoriaController } from "./controllers/Categoria/CadastrarCategoriaController";
 import { ListarCategoriaController } from "./controllers/Categoria/ListarCategoriaController";
+
 import { CadastrarProdutoController } from "./controllers/Produto/CadastrarProdutoController";
 import { FiltrarProdutosController } from "./controllers/Produto/FiltrarProdutosController";
+
 import { CriarPedidoController } from "./controllers/Pedido/CriarPedidoController";
 import { FecharPedidoController } from "./controllers/Pedido/FecharPedidoController";
+
+import { AdicionarItemController } from "./controllers/Item/AdicionarItemController";
 
 const router = Router();
 
@@ -35,5 +39,8 @@ router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController()
 // Rotas de Pedido
 router.post('/criar-pedido', isAuthenticated, new CriarPedidoController().handle);
 router.delete('/fechar-pedido', isAuthenticated, new FecharPedidoController().handle);
+
+// Rotas de Item
+router.post('/adicionar-item', isAuthenticated, new AdicionarItemController().handle);
 
 export { router };

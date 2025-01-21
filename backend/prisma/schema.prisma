@@ -48,6 +48,8 @@ model Produto {
 
   @@map("Produto")
   fk_Id_Categoria String
+
+  item Item[]
 }
 
 model Pedido {
@@ -70,7 +72,9 @@ model Item {
   data_Atualizacao DateTime? @default(now())
 
   pedido Pedido @relation(fields: [fk_Id_Pedido], references: [id])
+  produto Produto @relation(fields: [fk_Id_Produto], references: [id])
 
   @@map("Item")
   fk_Id_Pedido String
+  fk_Id_Produto String
 }

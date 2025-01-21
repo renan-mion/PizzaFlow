@@ -13,6 +13,7 @@ import { ListarCategoriaController } from "./controllers/Categoria/ListarCategor
 import { CadastrarProdutoController } from "./controllers/Produto/CadastrarProdutoController";
 import { FiltrarProdutosController } from "./controllers/Produto/FiltrarProdutosController";
 import { CriarPedidoController } from "./controllers/Pedido/CriarPedidoController";
+import { FecharPedidoController } from "./controllers/Pedido/FecharPedidoController";
 
 const router = Router();
 
@@ -33,5 +34,6 @@ router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController()
 
 // Rotas de Pedido
 router.post('/criar-pedido', isAuthenticated, new CriarPedidoController().handle);
+router.delete('/fechar-pedido', isAuthenticated, new FecharPedidoController().handle);
 
 export { router };

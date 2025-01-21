@@ -12,6 +12,7 @@ import { CadastrarCategoriaController } from "./controllers/Categoria/CadastrarC
 import { ListarCategoriaController } from "./controllers/Categoria/ListarCategoriaController";
 import { CadastrarProdutoController } from "./controllers/Produto/CadastrarProdutoController";
 import { FiltrarProdutosController } from "./controllers/Produto/FiltrarProdutosController";
+import { CriarPedidoController } from "./controllers/Pedido/CriarPedidoController";
 
 const router = Router();
 
@@ -29,5 +30,8 @@ router.get('/listar-categorias', isAuthenticated, new ListarCategoriaController(
 // Rotas de Produto
 router.post('/cadastro-produto', isAuthenticated, upload.single('file'), new CadastrarProdutoController().handle);
 router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController().handle)
+
+// Rotas de Pedido
+router.post('/criar-pedido', isAuthenticated, new CriarPedidoController().handle);
 
 export { router };

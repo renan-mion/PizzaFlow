@@ -18,6 +18,7 @@ import { CriarPedidoController } from "./controllers/Pedido/CriarPedidoControlle
 import { FecharPedidoController } from "./controllers/Pedido/FecharPedidoController";
 
 import { AdicionarItemController } from "./controllers/Item/AdicionarItemController";
+import { RemoverItemController } from "./controllers/Item/RemoverItemController";
 
 const router = Router();
 
@@ -42,5 +43,6 @@ router.delete('/fechar-pedido', isAuthenticated, new FecharPedidoController().ha
 
 // Rotas de Item
 router.post('/adicionar-item', isAuthenticated, new AdicionarItemController().handle);
+router.delete('/remover-item', isAuthenticated, new RemoverItemController().handle);
 
 export { router };

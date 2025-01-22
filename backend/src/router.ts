@@ -15,6 +15,7 @@ import { CadastrarProdutoController } from "./controllers/Produto/CadastrarProdu
 import { FiltrarProdutosController } from "./controllers/Produto/FiltrarProdutosController";
 
 import { CriarPedidoController } from "./controllers/Pedido/CriarPedidoController";
+import { EnviarPedidoController } from "./controllers/Pedido/EnviarPedidoController";
 import { FecharPedidoController } from "./controllers/Pedido/FecharPedidoController";
 
 import { AdicionarItemController } from "./controllers/Item/AdicionarItemController";
@@ -30,7 +31,7 @@ router.post('/login', new AuthUsuarioController().handle);
 router.get('/perfil', isAuthenticated, new PerfilUsuarioController().handle);
 
 // Rotas de Categoria
-router.post('/cadastro-categoria', isAuthenticated, new CadastrarCategoriaController().handle)
+router.post('/cadastro-categoria', isAuthenticated, new CadastrarCategoriaController().handle);
 router.get('/listar-categorias', isAuthenticated, new ListarCategoriaController().handle);
 
 // Rotas de Produto
@@ -39,6 +40,7 @@ router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController()
 
 // Rotas de Pedido
 router.post('/criar-pedido', isAuthenticated, new CriarPedidoController().handle);
+router.put('/enviar-pedido', isAuthenticated, new EnviarPedidoController().handle);
 router.delete('/fechar-pedido', isAuthenticated, new FecharPedidoController().handle);
 
 // Rotas de Item

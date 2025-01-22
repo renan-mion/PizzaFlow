@@ -17,6 +17,7 @@ import { FiltrarProdutosController } from "./controllers/Produto/FiltrarProdutos
 import { CriarPedidoController } from "./controllers/Pedido/CriarPedidoController";
 import { EnviarPedidoController } from "./controllers/Pedido/EnviarPedidoController";
 import { FecharPedidoController } from "./controllers/Pedido/FecharPedidoController";
+import { ListarPedidosController } from "./controllers/Pedido/ListarPedidosController";
 
 import { AdicionarItemController } from "./controllers/Item/AdicionarItemController";
 import { RemoverItemController } from "./controllers/Item/RemoverItemController";
@@ -42,6 +43,7 @@ router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController()
 router.post('/criar-pedido', isAuthenticated, new CriarPedidoController().handle);
 router.put('/enviar-pedido', isAuthenticated, new EnviarPedidoController().handle);
 router.delete('/fechar-pedido', isAuthenticated, new FecharPedidoController().handle);
+router.get('/listar-pedidos', isAuthenticated, new ListarPedidosController().handle);
 
 // Rotas de Item
 router.post('/adicionar-item', isAuthenticated, new AdicionarItemController().handle);

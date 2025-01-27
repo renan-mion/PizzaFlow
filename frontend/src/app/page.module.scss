@@ -1,3 +1,78 @@
-.teste {
-    color: red;
+
+.containerCenter {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-700);
+}
+
+.logo {
+    width: 600px;
+    height: 200px;
+}
+
+.login {
+    width: 400px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        width: 100%;
+        color: var(--white);
+        padding-bottom: 16px;
+        font-size: 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+    }
+}
+
+.input {
+    width: 100%;
+    height: 2.5rem;
+    padding: 0 16px;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--dark-900);
+    border: 1px solid var(--gray-100);
+    border-radius: 8px;
+}
+
+.button {
+    width: 100%;
+    height: 2.2rem;
+    background-color: var(--red-900);
+    border: 0;
+    border-radius: 8px;
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+.text {
+    color: var(--white);
+}
+
+@media(max-width: 620px) {
+    .logo {
+        width: 400px;
+        height: 120px;
+    }
+
+    .login {
+        width: 250px;
+    }
 }

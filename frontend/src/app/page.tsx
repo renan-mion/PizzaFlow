@@ -2,8 +2,35 @@ import styles from './page.module.scss';
 import Logo from '/public/Logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import { api } from '@/services/api';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
+  async function handleLogin(formData: FormData) {
+    "use server"
+
+    const email = formData.get("email");
+    const senha = formData.get("senha");
+
+    try {
+      const response = await api.post('/login', {
+        email,
+        senha
+      });
+
+      if(!response.data.token) {
+        return;
+      }
+
+      console.log(response.data);
+    } catch(err) {
+      console.log("Erro");
+      console.log(err);
+    }
+
+    redirect("/dashboard");
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.containerCenter}>
@@ -16,7 +43,7 @@ export default function Home() {
         />
 
         <section className={styles.login}>
-          <form>
+          <form action={handleLogin}>
             <input
               type="email"
               required
@@ -27,7 +54,7 @@ export default function Home() {
 
             <input type="password"
               required
-              name='password'
+              name='senha'
               placeholder='**********'
               className={styles.input}
             />

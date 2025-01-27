@@ -2,10 +2,35 @@ import styles from '../page.module.scss';
 import Logo from '/public/Logo.png';
 import Image from "next/image";
 import Link from "next/link";
-
+import { redirect } from 'next/navigation';
+import { api } from '@/services/api';
 
 
 export default function Cadastro() {
+
+    async function handleCadastro(formData: FormData) {
+        "use server"
+
+        const nome = formData.get("nome");
+        const email = formData.get("email");
+        const senha = formData.get("senha");
+
+        try {
+            await api.post('/cadastro', 
+                {
+                    nome,
+                    email,
+                    senha
+                }
+            )
+        } catch(err) {
+            console.log("Erro");
+            console.log(err);
+        }
+
+        redirect('/');
+    }
+
     return (
         <main className={styles.main}>
             <div className={styles.containerCenter}>
@@ -18,11 +43,11 @@ export default function Cadastro() {
                 />
 
                 <section className={styles.login}>
-                    <form>
+                    <form action={handleCadastro}>
                         <input
                             type="name"
                             required
-                            name='name'
+                            name='nome'
                             placeholder='Digite seu nome...'
                             className={styles.input}
                         />
@@ -37,7 +62,7 @@ export default function Cadastro() {
 
                         <input type="password"
                             required
-                            name='password'
+                            name='senha'
                             placeholder='**********'
                             className={styles.input}
                         />

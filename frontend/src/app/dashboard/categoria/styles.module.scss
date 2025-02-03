@@ -1,0 +1,30 @@
+.container {
+    max-width: 720px;
+    margin: 20px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        color: var(--white);
+    }
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0;
+
+    input {
+        height: 40px;
+        border-radius: 8px;
+        padding: 0 16px;
+        color: var(--dark-900);
+        border: 1px solid var(--gray-100);
+    }
+}
+

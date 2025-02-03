@@ -25,8 +25,8 @@ export function Header() {
                 </Link>
 
                 <nav>
-                    <Link href="dashboard/categoria">Nova Categoria</Link>
-                    <Link href="dashboard/produtos">Cardápio</Link>
+                    <Link href="/dashboard/categoria">Nova Categoria</Link>
+                    <Link href="/dashboard/produto">Cardápio</Link>
 
                     <form action={handleLogOut}>
                         <button type='submit'>

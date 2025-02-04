@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import { Button } from '../components/button/page';
+import { Button } from '../components/button';
 import { api } from '@/services/api';
 import { getCookieServer } from '@/lib/cookieServer';
 import { redirect } from 'next/navigation';
@@ -15,7 +15,6 @@ export default function Categoria() {
         }
 
         const token = await getCookieServer();
-        console.log(token);
 
         try {
             const response = await api.post("/cadastro-categoria", data, {
@@ -42,7 +41,7 @@ export default function Categoria() {
                     <input type="text"
                         name='nome'
                         placeholder='Nome da categoria, ex: Pizzas'
-                        required={true} />
+                        required />
 
                         <Button nome="Cadastrar"/>
                 </form>

@@ -3,11 +3,12 @@
 import { Button } from "@/app/dashboard/components/button";
 import styles from './styles.module.scss';
 import { UploadCloud } from "lucide-react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import { api } from "@/services/api";
 import { getCookieClient } from "@/lib/cookieClient";
+import { toast } from "sonner";
 
 interface CategoryProps {
     id: string,
@@ -21,8 +22,30 @@ interface Props {
 export function Form({ categorias }: Props) {
     const [image, setImage] = useState<File>();
     const [previewImage, setPreviewImage] = useState("");
+    const [erroCategoria, setErroCategoria] = useState(true);
+    const [erroImagem, setErroImagem] = useState(true);
 
-    async function handleCadastroProduto(formData: FormData) {
+    function handleMudancaCategoria(e: ChangeEvent<HTMLSelectElement>) {
+        if (Number(e.target.value) !== -1) {
+            setErroCategoria(false);
+            console.log("erro está false");
+        } else {
+            setErroCategoria(true);
+            console.log('erro está true');
+        }
+    }
+
+    function handleErroCategoria() {
+        toast.warning("Por favor, selecione uma categoria");
+        return;
+    }
+
+    function handleErroImagem() {
+        toast.warning("Por favor, faça upload de uma imagem");
+        return;
+    }
+
+    async function handleCadastroProduto(formData: FormData, e: FormEvent<HTMLFormElement>) {
         const index = Number(formData.get("categorias"));
 
         if (!image) {
@@ -39,6 +62,8 @@ export function Form({ categorias }: Props) {
 
         const token = await getCookieClient();
 
+        console.log(formData.get("categorias"));
+
         try {
             const response = await api.post("/cadastro-produto", data, {
                 headers: {
@@ -46,10 +71,21 @@ export function Form({ categorias }: Props) {
                 }
             });
 
-            setPreviewImage("");
-            console.log(response.data);
+            toast.success("Produto cadastrado com sucesso");
+
+            const form = e.currentTarget;
+
+            setTimeout(() => {
+                if (form) {
+                    setPreviewImage("");
+                    form.reset(); // Limpa o formulário
+                }
+
+            }, 5000);
+
         } catch (err) {
             console.log(err);
+            toast.error("Erro ao cadastrar produto")
         }
     }
 
@@ -64,14 +100,34 @@ export function Form({ categorias }: Props) {
 
             setImage(image);
             setPreviewImage(URL.createObjectURL(image));
+            setErroImagem(false);
         }
     }
+
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        if (erroCategoria) {
+            e.preventDefault(); // Impede a submissão do formulário
+            handleErroCategoria(); // Exibe a mensagem de erro
+            return;
+        }
+
+        if (!image) {
+            e.preventDefault();
+            setErroImagem(true);
+            handleErroImagem();
+            return;
+        }
+
+        // Se não houver erro, continua com a submissão
+        const formData = new FormData(e.currentTarget);
+        handleCadastroProduto(formData, e);
+    };
 
     return (
         <main className={styles.container}>
             <h1>Novo produto</h1>
 
-            <form action={handleCadastroProduto} className={styles.form}>
+            <form onSubmit={onSubmit} className={styles.form}>
                 <label className={styles.labelImage}>
                     <span>
                         <UploadCloud size={30} color="#FFF" />
@@ -79,7 +135,6 @@ export function Form({ categorias }: Props) {
 
                     <input type="file"
                         accept="image/png, image/jpeg"
-                        required
                         onChange={handleFile} />
 
                     {previewImage && (
@@ -95,8 +150,9 @@ export function Form({ categorias }: Props) {
 
                 <select
                     className={`${styles.input} ${styles.select}`}
-                    name="categorias" >
-                    <option value="0" defaultValue={0}>Selecione uma categoria</option>
+                    name="categorias"
+                    onChange={handleMudancaCategoria} >
+                    <option value="-1">Selecione uma categoria</option>
                     {categorias.map((categoria, index) => (
                         <option
                             key={categoria.id}

@@ -1,35 +1,43 @@
-import { api } from '@/services/api';
+"use client"
+
 import styles from './styles.module.scss';
 import { RefreshCw } from 'lucide-react';
+import { ModalPedido } from '../modal';
+import { Props } from '@/lib/order.type';
+import { use } from 'react';
+import { OrderContext } from '@/providers/pedido';
 
-export function Pedidos() {
-    async function handleGetPedidos() {
-        const pedidos = await api.get("/listar-pedidos");
+export function Pedidos({ pedidos }: Props) {
+    const { isOpened, onRequestOpen } = use(OrderContext);
 
-        return pedidos.data;
+    async function handleDetalhesPedido(id: string) {
+        await onRequestOpen(id);
     }
 
     return (
-        <div className={styles.container}>
-            <section className={styles.containerHeader}>
-                <h1>Últimos Pedidos</h1>
+        <main>
+            <div className={styles.container}>
+                <section className={styles.containerHeader}>
+                    <h1>Últimos Pedidos</h1>
 
-                <button>
-                    <RefreshCw size={24} color='#3fffa3'/>
-                </button>
-            </section>
+                    <button>
+                        <RefreshCw size={24} color='#3fffa3' />
+                    </button>
+                </section>
 
-            <section className={styles.listaPedidos}>
-                <button className={styles.itemPedido}>
-                    <div className={styles.tag}></div>
-                    <span>Mesa 10</span>
-                </button>
+                <section className={styles.listaPedidos}>
+                    {pedidos.map((pedido) => {
+                        return (
+                            <button onClick={() => handleDetalhesPedido(pedido.id)} key={pedido.id} className={styles.itemPedido}>
+                                <div className={styles.tag}></div>
+                                <span>Mesa {pedido.mesa}</span>
+                            </button>
+                        )
+                    })}
+                </section>
+            </div>
 
-                <button className={styles.itemPedido}>
-                    <div className={styles.tag}></div>
-                    <span>Mesa 20</span>
-                </button>
-            </section>
-        </div>
-    ) 
+            {isOpened && <ModalPedido />}
+        </main>
+    )
 }

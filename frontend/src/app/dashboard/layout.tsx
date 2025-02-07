@@ -1,12 +1,15 @@
-import { Header } from "./components/header"
+import { Header } from "./components/header";
+import { OrderProvider } from "@/providers/pedido";
 
-export default function DashboardLayout({ children }: 
-    { children: React.ReactNode}
+export default function DashboardLayout({ children }:
+    { children: React.ReactNode }
 ) {
     return (
         <div>
-            <Header/>
-            {children}
+            <Header />
+            <OrderProvider>
+                {children}
+            </OrderProvider>
         </div>
     )
 }

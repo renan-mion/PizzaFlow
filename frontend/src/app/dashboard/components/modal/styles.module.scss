@@ -1,0 +1,82 @@
+.container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(131, 130, 143, 0.4);
+    z-index: 999;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    backdrop-filter: blur(4px);
+}
+
+.content {
+    background-color: var(--dark-700);
+    width: 100%;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 16px 16px 0 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    h2 {
+        font-size: 36px;
+        color: var(--white);
+    }
+}
+
+.botaoVoltar {
+    width: 40px;
+    background-color: transparent;
+    border: none;
+
+}
+
+.pedido {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    span {
+        font-size: 32px;
+        color: var(--green-900);
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nomeItem {
+        font-size: 22px;
+    }
+
+    .descricaoItem {
+        font-size: 18px;
+        color: var(--white);
+    }
+}
+
+.botaoConcluir {
+    max-width: 200px;
+    height: 40px;
+    margin: auto 0 16px 0;
+    background-color: var(--green-900);
+    color: var(--black);
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+
+    &:hover {
+        background-color: var(--red-900);
+        color: var(--white);
+    }
+}

@@ -14,6 +14,10 @@ export function Pedidos({ pedidos }: Props) {
         await onRequestOpen(id);
     }
 
+    function handleReload() {
+        window.location.reload();
+    }
+
     return (
         <main>
             <div className={styles.container}>
@@ -21,7 +25,7 @@ export function Pedidos({ pedidos }: Props) {
                     <h1>Últimos Pedidos</h1>
 
                     <button>
-                        <RefreshCw size={24} color='#3fffa3' />
+                        <RefreshCw onClick={handleReload} size={24} color='#3fffa3' />
                     </button>
                 </section>
 

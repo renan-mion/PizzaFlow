@@ -2,11 +2,29 @@ import styles from './styles.module.scss';
 import { X } from 'lucide-react';
 import { use } from 'react';
 import { OrderContext } from '@/providers/pedido';
+import { api } from '@/services/api';
+import { getCookieClient } from '@/lib/cookieClient';
 
 export function ModalPedido() {
     const { onRequestClose, detalhes } = use(OrderContext);
 
-    console.log(detalhes);
+    async function handleConcluirPedido(id: string) { 
+        try {
+            const token = await getCookieClient();
+
+            await api.put("/concluir-pedido", {
+                id: id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            onRequestClose();
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     return (
         <dialog className={styles.container}>
@@ -28,7 +46,7 @@ export function ModalPedido() {
                     })}
                 </article>
 
-                <button className={styles.botaoConcluir}>Concluir pedido</button>
+                <button onClick={() => handleConcluirPedido(detalhes[0].pedido.id)} className={styles.botaoConcluir}>Concluir pedido</button>
             </section>
         </dialog >
     )

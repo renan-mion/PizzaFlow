@@ -15,6 +15,10 @@ export function Pedidos({ pedidos }: Props) {
         await onRequestOpen(id);
     }
 
+    function handleReload() {
+        window.location.reload();
+    }
+
     return (
         <main>
             <div className={styles.container}>

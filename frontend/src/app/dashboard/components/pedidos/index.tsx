@@ -6,6 +6,7 @@ import { ModalPedido } from '../modal';
 import { Props } from '@/lib/order.type';
 import { use } from 'react';
 import { OrderContext } from '@/providers/pedido';
+import { handleRefresh } from '@/components/refresh';
 
 export function Pedidos({ pedidos }: Props) {
     const { isOpened, onRequestOpen } = use(OrderContext);
@@ -21,7 +22,7 @@ export function Pedidos({ pedidos }: Props) {
                     <h1>Últimos Pedidos</h1>
 
                     <button>
-                        <RefreshCw size={24} color='#3fffa3' />
+                        <RefreshCw onClick={handleRefresh} size={24} color='#3fffa3' />
                     </button>
                 </section>
 

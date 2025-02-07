@@ -18,7 +18,12 @@ export default function RootLayout({
         <Toaster
           position="bottom-right"
           duration={5000}
-          richColors />
+          richColors
+          toastOptions={{
+            style: {
+              fontSize: '1.2rem',
+            }
+          }} />
         {children}
       </body>
     </html>

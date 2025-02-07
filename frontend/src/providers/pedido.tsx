@@ -4,12 +4,14 @@ import { getCookieClient } from "@/lib/cookieClient";
 import { ItemProps } from "@/lib/order.type";
 import { api } from "@/services/api";
 import { createContext, ReactNode, useState } from "react";
+import { toast } from "sonner";
 
 type OrderContextData = {
     isOpened: boolean,
     onRequestOpen: (id: string) => Promise<void>,
     onRequestClose: () => void;
     detalhes: ItemProps[];
+    concluirPedido: (id: string) => Promise<void>;
 }
 
 type OrderProviderProps = {
@@ -39,8 +41,30 @@ export function OrderProvider({ children }: OrderProviderProps) {
         setIsOpened(true);
     }
 
-    function onRequestClose() {
+    async function onRequestClose() {
         setIsOpened(false);
+    }
+
+    async function concluirPedido(id: string) {
+        try {
+            const token = await getCookieClient();
+
+            await api.put("/concluir-pedido", {
+                id: id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            onRequestClose();
+
+            toast.success("Pedido concluído com sucesso");
+        } catch (err) {
+            console.log(err);
+            toast.error("Erro ao concluir pedido")
+            return;
+        }
     }
 
     return (
@@ -49,7 +73,8 @@ export function OrderProvider({ children }: OrderProviderProps) {
                 isOpened,
                 onRequestOpen,
                 onRequestClose,
-                detalhes
+                detalhes,
+                concluirPedido
             }}>
             {children}
         </OrderContext.Provider>

@@ -2,11 +2,19 @@ import styles from './styles.module.scss';
 import { X } from 'lucide-react';
 import { use } from 'react';
 import { OrderContext } from '@/providers/pedido';
+import { handleRefresh } from '@/components/refresh';
+import { toast } from 'sonner';
 
 export function ModalPedido() {
-    const { onRequestClose, detalhes } = use(OrderContext);
+    const {  onRequestClose, concluirPedido, detalhes } = use(OrderContext);
 
-    console.log(detalhes);
+    async function handleConcluirPedido(id: string) {
+        await concluirPedido(id);
+
+        setTimeout(() => {
+            handleRefresh()
+        }, 1000);
+    }
 
     return (
         <dialog className={styles.container}>
@@ -28,7 +36,7 @@ export function ModalPedido() {
                     })}
                 </article>
 
-                <button className={styles.botaoConcluir}>Concluir pedido</button>
+                <button onClick={() => handleConcluirPedido(detalhes[0].pedido.id)} className={styles.botaoConcluir}>Concluir pedido</button>
             </section>
         </dialog >
     )

@@ -6,17 +6,20 @@ import { ModalPedido } from '../modal';
 import { Props } from '@/lib/order.type';
 import { use } from 'react';
 import { OrderContext } from '@/providers/pedido';
-import { handleRefresh } from '@/components/refresh';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export function Pedidos({ pedidos }: Props) {
     const { isOpened, onRequestOpen } = use(OrderContext);
+    const router = useRouter();
 
     async function handleDetalhesPedido(id: string) {
         await onRequestOpen(id);
     }
 
-    function handleReload() {
-        window.location.reload();
+    function handleRefresh() {
+        router.refresh();
+        toast.success("Pedidos atualizados com sucesso");
     }
 
     return (
@@ -31,9 +34,15 @@ export function Pedidos({ pedidos }: Props) {
                 </section>
 
                 <section className={styles.listaPedidos}>
+                    {pedidos.length === 0 && (
+                        <span className={styles.spanSemPedidos}>
+                            Nenhum pedido aberto no momento
+                        </span>
+                    )}
                     {pedidos.map((pedido) => {
                         return (
-                            <button onClick={() => handleDetalhesPedido(pedido.id)} key={pedido.id} className={styles.itemPedido}>
+                            <button onClick={() => handleDetalhesPedido(pedido.id)} 
+                            key={pedido.id} className={styles.itemPedido}>
                                 <div className={styles.tag}></div>
                                 <span>Mesa {pedido.mesa}</span>
                             </button>

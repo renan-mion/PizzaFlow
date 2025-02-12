@@ -5,6 +5,7 @@ import { ItemProps } from "@/lib/order.type";
 import { api } from "@/services/api";
 import { createContext, ReactNode, useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type OrderContextData = {
     isOpened: boolean,
@@ -23,6 +24,7 @@ export const OrderContext = createContext({} as OrderContextData);
 export function OrderProvider({ children }: OrderProviderProps) {
     const [isOpened, setIsOpened] = useState(false);
     const [detalhes, setDetalhes] = useState<ItemProps[]>([]);
+    const router = useRouter();
 
     async function onRequestOpen(id: string) {
         const token = await getCookieClient();
@@ -57,9 +59,9 @@ export function OrderProvider({ children }: OrderProviderProps) {
                 }
             })
 
-            onRequestClose();
-
             toast.success("Pedido concluído com sucesso");
+            router.refresh();
+            onRequestClose();
         } catch (err) {
             console.log(err);
             toast.error("Erro ao concluir pedido")

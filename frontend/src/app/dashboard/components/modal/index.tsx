@@ -2,18 +2,22 @@ import styles from './styles.module.scss';
 import { X } from 'lucide-react';
 import { use } from 'react';
 import { OrderContext } from '@/providers/pedido';
-import { handleRefresh } from '@/components/refresh';
-import { toast } from 'sonner';
+import { calcularTotalPedido } from '@/lib/helper';
 
 export function ModalPedido() {
-    const {  onRequestClose, concluirPedido, detalhes } = use(OrderContext);
+    const { onRequestClose, concluirPedido, detalhes } = use(OrderContext);
 
     async function handleConcluirPedido(id: string) {
         await concluirPedido(id);
+    }
 
-        setTimeout(() => {
-            handleRefresh()
-        }, 1000);
+    function handleValorTotal() {
+        var valorTotal: number = 0;
+        detalhes.map((item) => {
+            valorTotal += parseFloat(item.produto.preco) * item.quantidade;
+        })
+
+        return valorTotal;
     }
 
     return (
@@ -26,14 +30,23 @@ export function ModalPedido() {
                 <article className={styles.pedido}>
                     <h2>Detalhes do pedido</h2>
                     <span>Mesa: <b>{detalhes[0].pedido.mesa}</b></span>
-                    {detalhes.map((item, index) => {
+                    {detalhes.map((item) => {
                         return (
                             <section key={item.id} className={styles.item}>
-                                <span className={styles.nomeItem}>{index + 1} - {item.produto.nome}</span>
-                                <span className={styles.descricaoItem}>{item.produto.descricao}</span>
+                                <span
+                                    className={styles.nomeItem}>
+                                    Qtd: {item.quantidade} - <b />
+                                    {item.produto.nome} - <b />
+                                    R$ {parseFloat(item.produto.preco) * item.quantidade}
+                                </span>
+                                <span
+                                    className={styles.descricaoItem}>
+                                    {item.produto.descricao}
+                                </span>
                             </section>
                         )
                     })}
+                    <span>Valor Total: R$ {calcularTotalPedido(detalhes)}</span>
                 </article>
 
                 <button onClick={() => handleConcluirPedido(detalhes[0].pedido.id)} className={styles.botaoConcluir}>Concluir pedido</button>

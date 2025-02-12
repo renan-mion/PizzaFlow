@@ -38,7 +38,7 @@ router.post('/cadastro-categoria', isAuthenticated, new CadastrarCategoriaContro
 router.get('/listar-categorias', isAuthenticated, new ListarCategoriaController().handle);
 
 // Rotas de Produto
-router.post('/cadastro-produto', isAuthenticated, upload.single('file'), new CadastrarProdutoController().handle);
+router.post('/cadastro-produto', isAuthenticated, new CadastrarProdutoController().handle);
 router.get('/filtrar-produtos', isAuthenticated, new FiltrarProdutosController().handle)
 
 // Rotas de Pedido

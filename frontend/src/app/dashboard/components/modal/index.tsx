@@ -33,16 +33,20 @@ export function ModalPedido() {
                     {detalhes.map((item) => {
                         return (
                             <section key={item.id} className={styles.item}>
-                                <span
-                                    className={styles.nomeItem}>
-                                    Qtd: {item.quantidade} - <b />
-                                    {item.produto.nome} - <b />
-                                    R$ {parseFloat(item.produto.preco) * item.quantidade}
-                                </span>
-                                <span
-                                    className={styles.descricaoItem}>
-                                    {item.produto.descricao}
-                                </span>
+                                <img src={item.produto.banner} width={80} height={80} alt="imagem" />
+                                <div className={styles.spansItem}>
+                                    <span
+                                        className={styles.nomeItem}>
+                                        Qtd: {item.quantidade} - <b />
+                                        {item.produto.nome} - <b />
+                                        R$ {parseFloat(item.produto.preco) * item.quantidade}
+                                    </span>
+                                    <span
+                                        className={styles.descricaoItem}>
+                                        {item.produto.descricao}
+                                    </span>
+                                </div>
+
                             </section>
                         )
                     })}

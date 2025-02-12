@@ -50,8 +50,14 @@
 
     .item {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 12px;
+    }
+
+    .spansItem {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
     .nomeItem {

@@ -28,10 +28,8 @@ export function Form({ categorias }: Props) {
     function handleMudancaCategoria(e: ChangeEvent<HTMLSelectElement>) {
         if (Number(e.target.value) !== -1) {
             setErroCategoria(false);
-            console.log("erro está false");
         } else {
             setErroCategoria(true);
-            console.log('erro está true');
         }
     }
 
@@ -45,7 +43,11 @@ export function Form({ categorias }: Props) {
         return;
     }
 
-    async function handleCadastroProduto(formData: FormData, e: FormEvent<HTMLFormElement>) {
+    async function handleCadastroProduto(e: FormEvent<HTMLFormElement>) {
+        const form = e.currentTarget;
+        
+        const formData = new FormData(form);
+        
         const index = Number(formData.get("categorias"));
 
         if (!image) {
@@ -62,8 +64,6 @@ export function Form({ categorias }: Props) {
 
         const token = await getCookieClient();
 
-        console.log(formData.get("categorias"));
-
         try {
             const response = await api.post("/cadastro-produto", data, {
                 headers: {
@@ -73,15 +73,8 @@ export function Form({ categorias }: Props) {
 
             toast.success("Produto cadastrado com sucesso");
 
-            const form = e.currentTarget;
-
-            setTimeout(() => {
-                if (form) {
-                    setPreviewImage("");
-                    form.reset(); // Limpa o formulário
-                }
-
-            }, 5000);
+            setPreviewImage("");
+            form.reset(); // Limpa o formulário
 
         } catch (err) {
             console.log(err);
@@ -105,22 +98,21 @@ export function Form({ categorias }: Props) {
     }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // Impede a submissão do formulário
+
         if (erroCategoria) {
-            e.preventDefault(); // Impede a submissão do formulário
             handleErroCategoria(); // Exibe a mensagem de erro
             return;
         }
 
         if (!image) {
-            e.preventDefault();
             setErroImagem(true);
             handleErroImagem();
             return;
         }
 
         // Se não houver erro, continua com a submissão
-        const formData = new FormData(e.currentTarget);
-        handleCadastroProduto(formData, e);
+        handleCadastroProduto(e);
     };
 
     return (

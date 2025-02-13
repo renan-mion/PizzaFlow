@@ -19,9 +19,19 @@
     "sonner": "^1.7.4"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/connect": "^3.4.38",
+    "@types/express": "^5.0.0",
+    "@types/express-serve-static-core": "^5.0.6",
+    "@types/http-errors": "^2.0.4",
+    "@types/mime": "^3.0.4",
     "@types/node": "^20",
+    "@types/qs": "^6.9.18",
+    "@types/range-parser": "^1.2.7",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/send": "^0.17.4",
+    "@types/serve-static": "^1.15.7",
     "typescript": "^5"
   }
 }

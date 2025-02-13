@@ -22,8 +22,6 @@ export default function Categoria() {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            console.log(response.data);
         } catch(err) {
             console.log(err);
             return;

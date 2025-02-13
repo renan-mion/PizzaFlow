@@ -23,7 +23,7 @@
         a {
             color: var(--white);
             text-decoration: none;
-            transition: color 0.8s;
+            transition: 0.8s;
 
             &:hover {
                 color: var(--red-900);
@@ -33,7 +33,7 @@
         button {
             border: 0;
             background-color: transparent;
-            transition: 0.5s;
+            transition: 0.8s;
 
             &:hover {
                 transform: scale(1.2);

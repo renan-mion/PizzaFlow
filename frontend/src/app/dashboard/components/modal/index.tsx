@@ -3,21 +3,13 @@ import { X } from 'lucide-react';
 import { use } from 'react';
 import { OrderContext } from '@/providers/pedido';
 import { calcularTotalPedido } from '@/lib/helper';
+import Image from 'next/image';
 
 export function ModalPedido() {
     const { onRequestClose, concluirPedido, detalhes } = use(OrderContext);
 
     async function handleConcluirPedido(id: string) {
         await concluirPedido(id);
-    }
-
-    function handleValorTotal() {
-        var valorTotal: number = 0;
-        detalhes.map((item) => {
-            valorTotal += parseFloat(item.produto.preco) * item.quantidade;
-        })
-
-        return valorTotal;
     }
 
     return (
@@ -33,13 +25,13 @@ export function ModalPedido() {
                     {detalhes.map((item) => {
                         return (
                             <section key={item.id} className={styles.item}>
-                                <img src={item.produto.banner} width={80} height={80} alt="imagem" />
+                                <Image src={item.produto.banner} width={80} height={80} alt="imagem" />
                                 <div className={styles.spansItem}>
                                     <span
                                         className={styles.nomeItem}>
                                         Qtd: {item.quantidade} - <b />
                                         {item.produto.nome} - <b />
-                                        R$ {parseFloat(item.produto.preco) * item.quantidade}
+                                        R$ {(parseFloat(item.produto.preco) * item.quantidade).toFixed(2)}
                                     </span>
                                     <span
                                         className={styles.descricaoItem}>
@@ -50,7 +42,7 @@ export function ModalPedido() {
                             </section>
                         )
                     })}
-                    <span>Valor Total: R$ {calcularTotalPedido(detalhes)}</span>
+                    <span>Valor Total: R$ {calcularTotalPedido(detalhes).toFixed(2)}</span>
                 </article>
 
                 <button onClick={() => handleConcluirPedido(detalhes[0].pedido.id)} className={styles.botaoConcluir}>Concluir pedido</button>

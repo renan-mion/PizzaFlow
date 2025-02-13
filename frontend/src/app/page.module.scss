@@ -59,11 +59,16 @@
 
 .button:hover {
     transform: scale(1.1);
-    transition: all 0.5s;
+    transition: all 0.8s;
 }
 
 .text {
     color: var(--white);
+    transition: 0.8s;
+
+    &:hover {
+        color: var(--red-900);
+    }
 }
 
 @media(max-width: 620px) {

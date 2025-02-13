@@ -80,6 +80,7 @@
     font-weight: bold;
     border: none;
     border-radius: 8px;
+    transition: 0.8s;
 
     &:hover {
         background-color: var(--red-900);

@@ -8,6 +8,6 @@
     color: var(--dar-900);
 
     &:hover {
-        filter: saturate(1.7);
+        filter: brightness(1.2);
     }
 }

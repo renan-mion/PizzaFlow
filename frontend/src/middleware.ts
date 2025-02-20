@@ -1,16 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCookieServer } from "./lib/cookieServer";
-import { headers } from "next/headers";
 import { api } from "./services/api";
 
 export async function middleware(req: NextRequest, res: NextResponse) {
     const { pathname } = req.nextUrl;
 
-    if (pathname.startsWith("/_next") || pathname === "/") {
+    if (pathname.startsWith("/_next")) {
         return NextResponse.next();
     }
 
     const token = await getCookieServer();
+
+    if (pathname === "/") {
+        if (token) {
+            const isValid = await validateToken(token);
+
+            if (isValid) {
+                return NextResponse.redirect(new URL("/dashboard", req.url));
+            }
+        }
+    }
 
     if (pathname.startsWith("/dashboard")) {
         if (token) {

@@ -1,47 +1,21 @@
+"use client"
+
 import styles from './page.module.scss';
 import Logo from '/public/Logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import { api } from '@/services/api';
-import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
+import { loginAction } from './components/LoginAction';
+import { Loading } from '@/components/Loading';
+
+import { useState } from 'react';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleLogin(formData: FormData) {
-    "use server"
-
-    const email = formData.get("email");
-    const senha = formData.get("senha");
-
-    try {
-      const response = await api.post('/login', {
-        email,
-        senha
-      });
-
-      if(!response.data.token) {
-        return;
-      }
-
-      console.log(response.data);
-
-      const cookie = await cookies();
-
-      const tempoExpiracao = 1000 * 60 * 60 * 24* 30;
-
-      cookie.set("session", response.data.token, {
-        maxAge: tempoExpiracao,
-        path: "/",
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production"
-      })
-
-    } catch(err) {
-      console.log("Erro");
-      console.log(err);
-    }
-
-    redirect("/dashboard");
+    setIsLoading(true);
+    await loginAction(formData);
+    setIsLoading(false);
   }
 
   return (
@@ -79,6 +53,10 @@ export default function Home() {
             </Link>
           </form>
         </section>
+        {isLoading && (
+            <div className={styles.loadingContainer}>
+              <Loading />
+            </div>)}
       </div>
     </main>
   );
